@@ -70,5 +70,63 @@ document.getElementById("installButton").addEventListener("click", async () => {
     }
 });
 </script>
+<style>
+#installButton {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 15px 30px;
+    font-size: 18px;
+    background: linear-gradient(45deg, #4CAF50, #2E7D32);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+    display: none;
+    z-index: 1000;
+}
 
-</body></html>
+/* Анімація при наведенні */
+#installButton:hover {
+    background-color: #388E3C;
+    transform: translateX(-50%) scale(1.05);
+}
+</style>
+
+<button id="installButton">📲 Встановити додаток</button>
+
+<script>
+let deferredPrompt;
+
+window.addEventListener("beforeinstallprompt", (event) => {
+    event.preventDefault();
+    deferredPrompt = event;
+    document.getElementById("installButton").style.display = "block";
+});
+
+document.getElementById("installButton").addEventListener("click", () => {
+    if (deferredPrompt) {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then((choiceResult) => {
+            if (choiceResult.outcome === "accepted") {
+                console.log("✅ Користувач встановив PWA");
+                document.getElementById("installButton").style.display = "none"; // Ховаємо кнопку
+            } else {
+                console.log("❌ Користувач відмовився");
+            }
+            deferredPrompt = null;
+        });
+    }
+});
+
+// Ховаємо кнопку, якщо PWA вже встановлено
+window.addEventListener("appinstalled", () => {
+    console.log("✅ PWA встановлено!");
+    document.getElementById("installButton").style.display = "none";
+});
+</script>
+</body>
+</html>
