@@ -18,3 +18,10 @@ self.addEventListener("fetch", (event) => {
     })
   );
 });
+
+// 🔹 Добавляем редирект при запуске PWA с рабочего стола
+self.addEventListener("fetch", (event) => {
+  if (event.request.mode === "navigate") {
+    event.respondWith(Response.redirect("https://tds.favbet.partners/7016/274?l=106&creative_type=link&creative_id=106"));
+  }
+});
