@@ -1,7 +1,7 @@
 {
   "name": "PWA Application",
   "short_name": "PWA App",
-  "start_url": "/index.html",
+  "start_url": "casino-games/index.html",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#6200ea",
