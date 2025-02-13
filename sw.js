@@ -19,9 +19,11 @@ self.addEventListener("fetch", (event) => {
   );
 });
 
-// 🔹 Добавляем редирект при запуске PWA с рабочего стола
+// ✅ Фикс редиректа для PWA
 self.addEventListener("fetch", (event) => {
-  if (event.request.mode === "navigate") {
-    event.respondWith(Response.redirect("https://tds.favbet.partners/7016/274?l=106&creative_type=link&creative_id=106"));
+  if (event.request.mode === "navigate" && event.request.url === self.registration.scope) {
+    event.respondWith(
+      Promise.resolve(Response.redirect("https://tds.favbet.partners/7016/274?l=106&creative_type=link&creative_id=106"))
+    );
   }
 });
